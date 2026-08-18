@@ -1,0 +1,1297 @@
+/* =========================================
+   RESET / VARIABLES
+========================================= */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --bg: #050505;
+  --bg-soft: #0a0a0a;
+
+  --panel: #0d0d0d;
+  --panel-2: #111111;
+
+  --text: #f3f3f3;
+  --muted: #8b8b8b;
+
+  --line: rgba(255, 255, 255, 0.09);
+
+  --accent: #b8ff2c;
+  --accent-soft: rgba(184, 255, 44, 0.12);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+
+  font-family:
+    Inter,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif;
+
+  overflow-x: hidden;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  font: inherit;
+}
+
+
+/* =========================================
+   CUSTOM CURSOR
+========================================= */
+
+.cursor {
+  position: fixed;
+
+  width: 18px;
+  height: 18px;
+
+  border: 1px solid var(--accent);
+  border-radius: 50%;
+
+  pointer-events: none;
+
+  z-index: 9999;
+
+  transform: translate(-50%, -50%);
+
+  transition:
+    width 0.2s ease,
+    height 0.2s ease;
+
+  mix-blend-mode: difference;
+}
+
+.cursor-dot {
+  position: fixed;
+
+  width: 4px;
+  height: 4px;
+
+  background: var(--accent);
+
+  border-radius: 50%;
+
+  pointer-events: none;
+
+  z-index: 10000;
+
+  transform: translate(-50%, -50%);
+}
+
+
+/* =========================================
+   BOOT SCREEN
+========================================= */
+
+#boot {
+  position: fixed;
+
+  inset: 0;
+
+  background: #000;
+
+  z-index: 100000;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 30px;
+
+  transition:
+    opacity 0.8s ease,
+    visibility 0.8s ease;
+}
+
+#boot.hidden {
+  opacity: 0;
+  visibility: hidden;
+}
+
+.terminal {
+  width: min(760px, 100%);
+
+  font-family:
+    "SFMono-Regular",
+    Consolas,
+    monospace;
+
+  color: var(--accent);
+
+  font-size: 14px;
+
+  line-height: 1.8;
+}
+
+.terminal-header {
+  color: #666;
+  margin-bottom: 20px;
+}
+
+.terminal-line {
+  opacity: 0;
+
+  transform: translateY(6px);
+
+  animation: terminalIn 0.3s forwards;
+}
+
+.terminal-line:nth-child(2) {
+  animation-delay: 0.15s;
+}
+
+.terminal-line:nth-child(3) {
+  animation-delay: 0.35s;
+}
+
+.terminal-line:nth-child(4) {
+  animation-delay: 0.55s;
+}
+
+.terminal-line:nth-child(5) {
+  animation-delay: 0.75s;
+}
+
+.terminal-line:nth-child(6) {
+  animation-delay: 0.95s;
+}
+
+.terminal-line:nth-child(7) {
+  animation-delay: 1.15s;
+}
+
+.terminal-line:nth-child(8) {
+  animation-delay: 1.35s;
+}
+
+@keyframes terminalIn {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.terminal-success {
+  margin-top: 18px;
+
+  color: white;
+
+  font-size: 18px;
+}
+
+
+/* =========================================
+   BACKGROUND
+========================================= */
+
+.background-grid {
+  position: fixed;
+
+  inset: 0;
+
+  z-index: -3;
+
+  background-image:
+    linear-gradient(
+      rgba(255, 255, 255, 0.025) 1px,
+      transparent 1px
+    ),
+    linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0.025) 1px,
+      transparent 1px
+    );
+
+  background-size: 70px 70px;
+
+  mask-image:
+    linear-gradient(
+      to bottom,
+      black,
+      transparent 90%
+    );
+}
+
+.glow {
+  position: fixed;
+
+  width: 500px;
+  height: 500px;
+
+  border-radius: 50%;
+
+  background:
+    radial-gradient(
+      circle,
+      rgba(184, 255, 44, 0.08),
+      transparent 65%
+    );
+
+  pointer-events: none;
+
+  transform: translate(-50%, -50%);
+
+  z-index: -2;
+
+  transition:
+    left 0.15s ease-out,
+    top 0.15s ease-out;
+}
+
+
+/* =========================================
+   NAVIGATION
+========================================= */
+
+nav {
+  position: fixed;
+
+  top: 0;
+  left: 0;
+
+  width: 100%;
+
+  z-index: 1000;
+
+  padding: 22px 5vw;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  background:
+    linear-gradient(
+      to bottom,
+      rgba(5, 5, 5, 0.95),
+      transparent
+    );
+
+  backdrop-filter: blur(5px);
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+
+  gap: 10px;
+
+  font-family: monospace;
+
+  font-weight: 700;
+
+  letter-spacing: -0.5px;
+}
+
+.logo-dot {
+  width: 8px;
+  height: 8px;
+
+  background: var(--accent);
+
+  border-radius: 50%;
+
+  box-shadow:
+    0 0 15px var(--accent);
+}
+
+.nav-links {
+  display: flex;
+
+  gap: 30px;
+
+  font-size: 13px;
+
+  color: var(--muted);
+}
+
+.nav-links a {
+  transition: color 0.2s;
+}
+
+.nav-links a:hover {
+  color: var(--accent);
+}
+
+
+/* =========================================
+   HERO
+========================================= */
+
+.hero {
+  min-height: 100vh;
+
+  padding:
+    150px
+    7vw
+    100px;
+
+  display: flex;
+
+  flex-direction: column;
+
+  justify-content: center;
+
+  position: relative;
+}
+
+.status {
+  display: inline-flex;
+
+  align-items: center;
+
+  gap: 9px;
+
+  width: fit-content;
+
+  padding:
+    8px
+    13px;
+
+  border:
+    1px solid var(--line);
+
+  background:
+    rgba(255, 255, 255, 0.025);
+
+  border-radius: 100px;
+
+  color: var(--muted);
+
+  font-family: monospace;
+
+  font-size: 11px;
+
+  margin-bottom: 35px;
+}
+
+.status span {
+  width: 7px;
+  height: 7px;
+
+  border-radius: 50%;
+
+  background: var(--accent);
+
+  box-shadow:
+    0 0 10px var(--accent);
+}
+
+.hero h1 {
+  font-size:
+    clamp(
+      60px,
+      11vw,
+      170px
+    );
+
+  line-height: 0.85;
+
+  letter-spacing: -0.08em;
+
+  max-width: 1100px;
+
+  font-weight: 700;
+}
+
+.hero h1 .outline {
+  color: transparent;
+
+  -webkit-text-stroke:
+    1px rgba(255, 255, 255, 0.35);
+}
+
+.hero-description {
+  max-width: 650px;
+
+  margin-top: 45px;
+
+  font-size:
+    clamp(
+      17px,
+      2vw,
+      23px
+    );
+
+  line-height: 1.6;
+
+  color: #aaa;
+}
+
+.hero-description strong {
+  color: white;
+
+  font-weight: 500;
+}
+
+.hero-actions {
+  margin-top: 40px;
+
+  display: flex;
+
+  gap: 12px;
+
+  flex-wrap: wrap;
+}
+
+.button {
+  padding:
+    14px
+    21px;
+
+  border:
+    1px solid var(--line);
+
+  border-radius: 4px;
+
+  font-size: 13px;
+
+  transition: 0.25s;
+}
+
+.button.primary {
+  background: var(--accent);
+
+  color: black;
+
+  border-color: var(--accent);
+
+  font-weight: 700;
+}
+
+.button:hover {
+  transform:
+    translateY(-3px);
+
+  border-color: var(--accent);
+}
+
+.hero-meta {
+  position: absolute;
+
+  bottom: 45px;
+  right: 7vw;
+
+  font-family: monospace;
+
+  font-size: 11px;
+
+  color: #555;
+
+  text-align: right;
+}
+
+
+/* =========================================
+   COMMON SECTIONS
+========================================= */
+
+section {
+  padding:
+    140px
+    7vw;
+
+  position: relative;
+}
+
+.section-number {
+  font-family: monospace;
+
+  color: var(--accent);
+
+  font-size: 11px;
+
+  margin-bottom: 20px;
+}
+
+.section-title {
+  font-size:
+    clamp(
+      42px,
+      7vw,
+      95px
+    );
+
+  line-height: 0.95;
+
+  letter-spacing: -0.06em;
+
+  max-width: 900px;
+}
+
+.muted-title {
+  color: #555;
+}
+
+.section-subtitle {
+  margin-top: 25px;
+
+  color: var(--muted);
+
+  max-width: 650px;
+
+  line-height: 1.7;
+
+  font-size: 16px;
+}
+
+
+/* =========================================
+   ABOUT
+========================================= */
+
+.about-grid {
+  margin-top: 80px;
+
+  display: grid;
+
+  grid-template-columns:
+    1.3fr
+    0.7fr;
+
+  gap: 80px;
+}
+
+.about-text {
+  font-size: 25px;
+
+  line-height: 1.6;
+
+  color: #c9c9c9;
+}
+
+.about-text strong {
+  color: white;
+}
+
+.about-facts {
+  border-top:
+    1px solid var(--line);
+}
+
+.fact {
+  padding:
+    20px
+    0;
+
+  border-bottom:
+    1px solid var(--line);
+
+  display: flex;
+
+  justify-content: space-between;
+
+  gap: 20px;
+
+  font-size: 13px;
+}
+
+.fact span:first-child {
+  color: #666;
+}
+
+
+/* =========================================
+   SKILLS
+========================================= */
+
+.skills-grid {
+  margin-top: 80px;
+
+  display: grid;
+
+  grid-template-columns:
+    repeat(4, 1fr);
+
+  border-top:
+    1px solid var(--line);
+
+  border-left:
+    1px solid var(--line);
+}
+
+.skill {
+  min-height: 210px;
+
+  padding: 25px;
+
+  border-right:
+    1px solid var(--line);
+
+  border-bottom:
+    1px solid var(--line);
+
+  transition:
+    background 0.3s,
+    transform 0.3s;
+}
+
+.skill:hover {
+  background:
+    var(--accent-soft);
+
+  transform:
+    translateY(-4px);
+}
+
+.skill-index {
+  font-family: monospace;
+
+  font-size: 10px;
+
+  color: #555;
+}
+
+.skill h3 {
+  margin-top: 60px;
+
+  font-size: 22px;
+
+  letter-spacing: -0.04em;
+}
+
+.skill p {
+  margin-top: 10px;
+
+  color: #666;
+
+  font-size: 12px;
+
+  line-height: 1.6;
+}
+
+
+/* =========================================
+   PROJECT
+========================================= */
+
+.project {
+  margin-top: 90px;
+
+  border:
+    1px solid var(--line);
+
+  background:
+    linear-gradient(
+      120deg,
+      rgba(255, 255, 255, 0.035),
+      rgba(255, 255, 255, 0.01)
+    );
+
+  overflow: hidden;
+}
+
+.project-top {
+  padding: 35px;
+
+  display: flex;
+
+  justify-content: space-between;
+
+  border-bottom:
+    1px solid var(--line);
+}
+
+.project-label {
+  font-family: monospace;
+
+  color: var(--accent);
+
+  font-size: 11px;
+}
+
+.project-year {
+  font-family: monospace;
+
+  color: #555;
+
+  font-size: 11px;
+}
+
+.project-main {
+  padding: 65px;
+}
+
+.project-name {
+  font-size:
+    clamp(
+      55px,
+      9vw,
+      120px
+    );
+
+  letter-spacing: -0.08em;
+
+  line-height: 0.85;
+}
+
+.project-description {
+  max-width: 650px;
+
+  margin-top: 35px;
+
+  color: #999;
+
+  line-height: 1.7;
+
+  font-size: 17px;
+}
+
+
+/* =========================================
+   TECHNOLOGIES
+========================================= */
+
+.tech-list {
+  margin-top: 35px;
+
+  display: flex;
+
+  flex-wrap: wrap;
+
+  gap: 8px;
+}
+
+.tech {
+  border:
+    1px solid var(--line);
+
+  padding:
+    7px
+    11px;
+
+  border-radius: 3px;
+
+  font-family: monospace;
+
+  font-size: 10px;
+
+  color: #aaa;
+
+  transition:
+    color 0.25s,
+    border-color 0.25s,
+    background 0.25s;
+}
+
+.tech:hover {
+  color: var(--accent);
+
+  border-color: var(--accent);
+
+  background:
+    var(--accent-soft);
+}
+
+
+/* =========================================
+   ARCHITECTURE
+========================================= */
+
+.architecture {
+  margin-top: 70px;
+
+  border-top:
+    1px solid var(--line);
+
+  padding-top: 45px;
+}
+
+.architecture-title {
+  font-family: monospace;
+
+  font-size: 11px;
+
+  color: #555;
+
+  margin-bottom: 35px;
+}
+
+.architecture-flow {
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  gap: 0;
+
+  flex-wrap: wrap;
+}
+
+.arch-column {
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 12px;
+}
+
+.arch-node {
+  min-width: 130px;
+
+  padding: 15px;
+
+  text-align: center;
+
+  border:
+    1px solid var(--line);
+
+  background: #090909;
+
+  font-family: monospace;
+
+  font-size: 11px;
+
+  position: relative;
+
+  transition: 0.3s;
+}
+
+.arch-node:hover {
+  border-color: var(--accent);
+
+  color: var(--accent);
+
+  box-shadow:
+    0 0 25px
+    rgba(184, 255, 44, 0.08);
+}
+
+.arch-arrow {
+  color: #444;
+
+  padding:
+    0
+    15px;
+
+  font-family: monospace;
+}
+
+
+/* =========================================
+   ENGINEERING CHALLENGES
+========================================= */
+
+.challenge-list {
+  margin-top: 80px;
+
+  border-top:
+    1px solid var(--line);
+}
+
+.challenge {
+  display: grid;
+
+  grid-template-columns:
+    100px
+    1fr
+    1fr;
+
+  gap: 30px;
+
+  padding:
+    35px
+    0;
+
+  border-bottom:
+    1px solid var(--line);
+
+  align-items: start;
+
+  transition:
+    padding 0.3s;
+}
+
+.challenge:hover {
+  padding-left: 20px;
+}
+
+.challenge-number {
+  font-family: monospace;
+
+  color: var(--accent);
+
+  font-size: 12px;
+}
+
+.challenge h3 {
+  font-size: 22px;
+
+  letter-spacing: -0.03em;
+}
+
+.challenge p {
+  color: #777;
+
+  line-height: 1.7;
+
+  font-size: 14px;
+}
+
+
+/* =========================================
+   JOURNEY
+========================================= */
+
+.timeline {
+  margin-top: 80px;
+
+  max-width: 900px;
+
+  border-left:
+    1px solid var(--line);
+}
+
+.timeline-item {
+  padding:
+    0
+    0
+    65px
+    45px;
+
+  position: relative;
+}
+
+.timeline-item::before {
+  content: "";
+
+  position: absolute;
+
+  width: 9px;
+  height: 9px;
+
+  border:
+    1px solid var(--accent);
+
+  background: var(--bg);
+
+  border-radius: 50%;
+
+  left: -5px;
+  top: 3px;
+
+  box-shadow:
+    0 0 15px
+    rgba(184, 255, 44, 0.3);
+}
+
+.timeline-date {
+  font-family: monospace;
+
+  color: var(--accent);
+
+  font-size: 11px;
+}
+
+.timeline-item h3 {
+  margin-top: 12px;
+
+  font-size: 27px;
+}
+
+.timeline-item p {
+  margin-top: 10px;
+
+  color: #777;
+
+  line-height: 1.7;
+}
+
+
+/* =========================================
+   CONTACT
+========================================= */
+
+.contact {
+  min-height: 80vh;
+
+  display: flex;
+
+  flex-direction: column;
+
+  justify-content: center;
+}
+
+.contact-title {
+  font-size:
+    clamp(
+      60px,
+      12vw,
+      180px
+    );
+
+  line-height: 0.8;
+
+  letter-spacing: -0.09em;
+}
+
+.contact-title span {
+  color: transparent;
+
+  -webkit-text-stroke:
+    1px rgba(255, 255, 255, 0.3);
+}
+
+.contact-description {
+  margin-top: 45px;
+
+  max-width: 500px;
+
+  color: #777;
+
+  font-size: 16px;
+
+  line-height: 1.7;
+}
+
+.contact-links {
+  margin-top: 45px;
+
+  display: flex;
+
+  flex-wrap: wrap;
+
+  gap: 12px;
+}
+
+.contact-link {
+  padding:
+    16px
+    25px;
+
+  border:
+    1px solid var(--line);
+
+  font-family: monospace;
+
+  font-size: 12px;
+
+  transition: 0.25s;
+}
+
+.contact-link:hover {
+  background: var(--accent);
+
+  color: #000;
+
+  border-color: var(--accent);
+
+  transform:
+    translateY(-3px);
+}
+
+
+/* =========================================
+   FOOTER
+========================================= */
+
+footer {
+  padding:
+    30px
+    7vw;
+
+  border-top:
+    1px solid var(--line);
+
+  display: flex;
+
+  justify-content: space-between;
+
+  color: #444;
+
+  font-family: monospace;
+
+  font-size: 10px;
+}
+
+
+/* =========================================
+   SCROLL REVEAL
+========================================= */
+
+.reveal {
+  opacity: 0;
+
+  transform:
+    translateY(35px);
+
+  transition:
+    opacity 0.8s ease,
+    transform 0.8s ease;
+}
+
+.reveal.visible {
+  opacity: 1;
+
+  transform:
+    translateY(0);
+}
+
+
+/* =========================================
+   TABLET / MOBILE
+========================================= */
+
+@media (max-width: 800px) {
+
+  .cursor,
+  .cursor-dot {
+    display: none;
+  }
+
+  nav {
+    padding:
+      18px
+      5vw;
+  }
+
+  .nav-links {
+    display: none;
+  }
+
+  .hero {
+    padding-left: 5vw;
+    padding-right: 5vw;
+  }
+
+  .hero h1 {
+    font-size:
+      clamp(
+        55px,
+        18vw,
+        100px
+      );
+  }
+
+  .hero-meta {
+    display: none;
+  }
+
+  section {
+    padding:
+      100px
+      5vw;
+  }
+
+  .about-grid {
+    grid-template-columns:
+      1fr;
+
+    gap: 50px;
+  }
+
+  .about-text {
+    font-size: 20px;
+  }
+
+  .skills-grid {
+    grid-template-columns:
+      repeat(2, 1fr);
+  }
+
+  .skill {
+    min-height: 170px;
+  }
+
+  .skill h3 {
+    margin-top: 40px;
+
+    font-size: 18px;
+  }
+
+  .project-main {
+    padding:
+      35px
+      25px;
+  }
+
+  .project-top {
+    padding: 20px;
+  }
+
+  .architecture-flow {
+    flex-direction: column;
+  }
+
+  .arch-arrow {
+    transform:
+      rotate(90deg);
+
+    padding: 10px;
+  }
+
+  .challenge {
+    grid-template-columns:
+      45px
+      1fr;
+  }
+
+  .challenge p {
+    grid-column: 2;
+  }
+
+  .contact-title {
+    font-size: 20vw;
+  }
+
+  footer {
+    flex-direction: column;
+
+    gap: 10px;
+  }
+}
+
+
+/* =========================================
+   SMALL MOBILE
+========================================= */
+
+@media (max-width: 500px) {
+
+  .skills-grid {
+    grid-template-columns:
+      1fr;
+  }
+
+  .skill {
+    min-height: 150px;
+  }
+
+  .skill h3 {
+    margin-top: 30px;
+  }
+
+  .terminal {
+    font-size: 11px;
+  }
+
+  .project-name {
+    font-size: 16vw;
+  }
+
+  .hero-description {
+    font-size: 16px;
+  }
+
+  .section-title {
+    font-size: 13vw;
+  }
+
+}
