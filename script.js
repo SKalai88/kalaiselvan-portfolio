@@ -27,6 +27,10 @@ window.addEventListener(
   "mousemove",
   (event) => {
 
+    if (!glow) {
+      return;
+    }
+
     glow.style.left =
       event.clientX + "px";
 
@@ -52,6 +56,10 @@ window.addEventListener(
   "mousemove",
   (event) => {
 
+    if (!cursor || !cursorDot) {
+      return;
+    }
+
     cursor.style.left =
       event.clientX + "px";
 
@@ -75,7 +83,7 @@ window.addEventListener(
 
 const interactiveElements =
   document.querySelectorAll(
-    "a, button, .skill, .arch-node, .tech"
+    "a, button, .skill, .arch-node, .tech, .mini-project"
   );
 
 
@@ -85,6 +93,10 @@ interactiveElements.forEach(
     element.addEventListener(
       "mouseenter",
       () => {
+
+        if (!cursor) {
+          return;
+        }
 
         cursor.style.width =
           "35px";
@@ -99,6 +111,10 @@ interactiveElements.forEach(
     element.addEventListener(
       "mouseleave",
       () => {
+
+        if (!cursor) {
+          return;
+        }
 
         cursor.style.width =
           "18px";
@@ -179,6 +195,10 @@ window.addEventListener(
   "scroll",
   () => {
 
+    if (!heroTitle) {
+      return;
+    }
+
     const scroll =
       window.scrollY;
 
@@ -232,10 +252,6 @@ window.addEventListener(
         const sectionTop =
           section.offsetTop;
 
-        const sectionHeight =
-          section.clientHeight;
-
-
         if (
           window.scrollY >=
           sectionTop - 250
@@ -281,7 +297,9 @@ window.addEventListener(
 ========================================= */
 
 document
-  .querySelectorAll('a[href^="#"]')
+  .querySelectorAll(
+    'a[href^="#"]'
+  )
   .forEach(
     (anchor) => {
 
@@ -296,7 +314,11 @@ document
           if (
             targetId === "#"
           ) {
+
+            event.preventDefault();
+
             return;
+
           }
 
 
@@ -312,8 +334,13 @@ document
 
 
             target.scrollIntoView({
-              behavior: "smooth",
-              block: "start"
+
+              behavior:
+                "smooth",
+
+              block:
+                "start"
+
             });
 
           }
@@ -323,3 +350,21 @@ document
 
     }
   );
+
+
+/* =========================================
+   CURRENT YEAR
+========================================= */
+
+const footerYear =
+  document.querySelector(
+    "footer span"
+  );
+
+
+if (footerYear) {
+
+  footerYear.textContent =
+    `© ${new Date().getFullYear()} KALAI SELVAN S`;
+
+}
