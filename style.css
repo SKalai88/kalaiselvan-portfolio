@@ -1438,6 +1438,201 @@ section {
 
 }
 
+/* =========================================
+   PROJECT ACTIONS
+========================================= */
+
+.project-actions {
+  margin-top: 45px;
+
+  display: flex;
+
+  gap: 12px;
+}
+
+.project-button {
+
+  display: inline-flex;
+
+  align-items: center;
+
+  padding:
+    13px 18px;
+
+  border:
+    1px solid var(--line);
+
+  font-family:
+    monospace;
+
+  font-size:
+    10px;
+
+  transition:
+    .25s;
+
+}
+
+.project-button:hover {
+
+  background:
+    var(--accent);
+
+  color:
+    #000;
+
+  border-color:
+    var(--accent);
+
+  transform:
+    translateY(-3px);
+
+}
+
+
+/* =========================================
+   MINI PROJECT TOP
+========================================= */
+
+.mini-project-top {
+
+  display:
+    flex;
+
+  justify-content:
+    space-between;
+
+  align-items:
+    center;
+
+}
+
+.mini-project-type {
+
+  font-family:
+    monospace;
+
+  font-size:
+    8px;
+
+  color:
+    #555;
+
+  border:
+    1px solid var(--line);
+
+  padding:
+    5px 8px;
+
+}
+
+
+/* =========================================
+   MINI PROJECT ICON
+========================================= */
+
+.mini-project-icon {
+
+  margin-top:
+    35px;
+
+  width:
+    48px;
+
+  height:
+    48px;
+
+  display:
+    flex;
+
+  align-items:
+    center;
+
+  justify-content:
+    center;
+
+  border:
+    1px solid var(--line);
+
+  color:
+    var(--accent);
+
+  font-family:
+    monospace;
+
+  font-size:
+    20px;
+
+  transition:
+    .3s;
+
+}
+
+.mini-project:hover
+.mini-project-icon {
+
+  border-color:
+    var(--accent);
+
+  box-shadow:
+    0 0 20px
+    rgba(184,255,44,.08);
+
+}
+
+
+/* =========================================
+   MINI PROJECT LINK
+========================================= */
+
+.mini-project-link {
+
+  display:
+    inline-block;
+
+  margin-top:
+    25px;
+
+  color:
+    #aaa;
+
+  font-family:
+    monospace;
+
+  font-size:
+    9px;
+
+  transition:
+    .2s;
+
+}
+
+.mini-project-link:hover {
+
+  color:
+    var(--accent);
+
+}
+
+
+/* =========================================
+   MINI PROJECT UPDATE
+========================================= */
+
+.mini-project h3 {
+
+  margin-top:
+    25px;
+
+}
+
+.mini-project p {
+
+  min-height:
+    80px;
+
+}
+
 .mini-tech {
 
   margin-top:
@@ -2047,12 +2242,15 @@ footer a:hover {
   }
 
   footer {
-
     flex-direction:
       column;
-
   }
-
+  .project-actions {
+    margin-top: 30px;
+  }
+  .mini-project p {
+    min-height: auto;
+  }
 }
 
 
